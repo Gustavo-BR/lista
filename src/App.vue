@@ -35,27 +35,51 @@
             </v-btn>
 
             <!-- MANLIST SETTINGS -->
-            <v-btn color="blue white--text"><span>MAN LIST</span></v-btn>                
+            <v-btn color="blue white--text" 
+            @click="statusList=!statusList, showMan=!showMan">
+            <span>MAN LIST</span></v-btn>                
 
             <!-- WOMANLIST SETTINGS -->    
-              <v-btn color="pink white--text"><span>WOMAN LIST</span></v-btn>
+              <v-btn color="pink white--text" 
+              @click="statusList=!statusList, showWoman=!showWoman">
+              <span>WOMAN LIST</span></v-btn>
           </v-flex>
         </v-container>
         
       </v-form>
       <v-spacer></v-spacer>
-        {{ManList[0]}}
-        <v-list>
-          <v-card>
-            <v-data-table
-            :headers="HEADER"
-            :items="ManList, WomanList"
-            class="elevation-1"
-            :itens-per-page="20"
-            ></v-data-table>
-          </v-card>
-        </v-list>
-      </v-card>
+      <v-list>
+        <!-- DATA TABLE OF BOUTH -->
+        <v-card>
+          <v-data-table
+          v-show="statusList"
+          :headers="HEADER"
+          :items="ListAll"
+          class="elevation-1"
+          :itens-per-page="20"
+          ></v-data-table>
+        </v-card>
+        <!-- DATA TABLE OF MANS -->
+        <v-card>
+          <v-data-table
+          v-show="showMan"
+          :headers="HEADER"
+          :items="ManList"
+          class="elevation-1"
+          :itens-per-page="20"
+          ></v-data-table>
+        </v-card>
+        <!-- DATA TABLE OF WOMANS -->
+        <v-card>
+          <v-data-table
+          v-show="showWoman"
+          :headers="HEADER"
+          :items="WomanList"
+          class="elevation-1"
+          :itens-per-page="20"
+          ></v-data-table>
+        </v-card>
+      </v-list>
     </v-content>
   
   </v-app>
@@ -63,15 +87,20 @@
 
 
 <script>
+// DEFAULT OPTIONS
+import { defaultCoreCipherList } from 'constants';
   export default {
     data: () => ({
     dialog: false,
+    statusList: true,
+    showMan: false,
+    showWoman: false,
     name: [],
     genre:[],
     HEADER: [
     {
       text: 'Nomes',
-      align: 'center',
+      align: 'left',
       sortable: false,
       value: 'name',
     },
@@ -81,20 +110,32 @@
     items: [
           'Man',
           'Woman',
-    ],
-            
-
+    ],           
+    // DECLARATION OF ARRAYS
     ManList:[],
     WomanList:[],
-
-      
+    ListAll:[],
   }),
+  // SAVE FUNCTION TO INSERT NAMES ON LISTS
   methods:{
     salvar(){
-      this.ManList.push({name: this.name, genre: this.genre}) 
+      switch(this.genre){
+        case 'Man':
+          this.ManList.push({name: this.name, genre: this.genre})
+          this.ListAll.push({name: this.name, genre: this.genre})
+          this.name=""
+          this.genre=""
+          break;
+        case 'Woman':
+          this.WomanList.push({name: this.name, genre: this.genre}) 
+          this.ListAll.push({name: this.name, genre: this.genre})
+          this.name=""
+          this.genre=""
+          break;
+          default:
+          break;
       }
-      
-              
-    }
+    }               
   }
+}
 </script>
