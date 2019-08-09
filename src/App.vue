@@ -28,69 +28,54 @@
          </v-layout>
 
           <!-- BUTTONS -->
-          <v-flex md3> 
+          <v-flex xs12 md3> 
             <!-- SAVE BUTTON -->
             <v-btn color="green white--text" @click="salvar()">
               <span>SAVE</span>
             </v-btn>
 
             <!-- MANLIST SETTINGS -->
-            <v-dialog v-model="dialog" fullscreen hide-overlay="dialog-bottom-transition">
-              <!-- MANLIST BUTTON -->
-              <template v-slot:activator="{on}">
-                <v-btn flat small v-on="on">
-                  <span>MAN LIST</span>
-                </v-btn>
-              </template>
-                
-              <!-- EXIT DIALOG MANLIST -->
-              <v-card>
-                <v-toolbar dark color="green">
-                  <v-btn icon dark @click="dialog = false">
-                    <v-icon>X</v-icon>
-                  </v-btn>
-                </v-toolbar>
-              </v-card>
-            </v-dialog> 
+            <v-btn color="blue white--text"><span>MAN LIST</span></v-btn>                
 
             <!-- WOMANLIST SETTINGS -->    
-            <v-dialog v-model="dialog" fullscreen hide-overlay="dialog-bottom-transition">
-              <!-- WOMANLIST BUTTON -->
-              <template v-slot:activator="{on}">
-                <v-btn flat small v-on="on">
-                  <span>WOMAN LIST</span>
-                </v-btn>
-              </template>
-
-              <!-- EXIT DIALOG WOMANLIST -->
-              <v-card>
-                <v-toolbar dark color="black">
-                  <v-btn icon dark @click="dialog = false">
-                    <v-icon>X</v-icon>
-                  </v-btn>
-                </v-toolbar>
-              </v-card>
-            </v-dialog> 
+              <v-btn color="pink white--text"><span>WOMAN LIST</span></v-btn>
           </v-flex>
         </v-container>
+        
       </v-form>
+      <v-spacer></v-spacer>
+        {{ManList[0]}}
+        <v-list>
+          <v-card>
+            <v-data-table
+            :headers="HEADER"
+            :items="ManList, WomanList"
+            class="elevation-1"
+            :itens-per-page="20"
+            ></v-data-table>
+          </v-card>
+        </v-list>
+      </v-card>
     </v-content>
+  
   </v-app>
 </template>
+
 
 <script>
   export default {
     data: () => ({
     dialog: false,
-    name: '',
-    genre:'',
-    headers: [
+    name: [],
+    genre:[],
+    HEADER: [
     {
       text: 'Nomes',
-      align: 'left',
+      align: 'center',
       sortable: false,
-      value: 'nome',
-    }
+      value: 'name',
+    },
+    {text: 'Genre', value: 'genre'}
     ],
     select: null,
     items: [
@@ -98,23 +83,18 @@
           'Woman',
     ],
             
-      WomanList:[],
-      ManList:[],
+
+    ManList:[],
+    WomanList:[],
 
       
   }),
   methods:{
     salvar(){
-          switch (this.genre) {
-            case "Man":
-              this.ManList.push({name: this.name}) 
-              break;
-          
-            default:
-              break;
-          }
+      this.ManList.push({name: this.name, genre: this.genre}) 
+      }
+      
               
     }
-    },
   }
 </script>
