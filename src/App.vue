@@ -7,16 +7,14 @@
         <span >LIST</span>
       </v-toolbar-title>      
     </v-app-bar>
-
     <v-content>
       <v-form v-model="valid">
-        
         <!-- CONTAINER -->
         <v-container grid-list-xl>
          <!-- NAME AND GENRE BOX -->
          <v-layout wrap>
            <!-- INSERT NAME -->
-           <v-flex x10 md4>
+           <v-flex xs10 md4>
              <v-text-field v-model="name" label="NAME" required> 
              </v-text-field>
            </v-flex>
@@ -28,19 +26,19 @@
          </v-layout>
 
           <!-- BUTTONS -->
-          <v-flex xs12 md3> 
+          <v-flex xs12 md4> 
             <!-- SAVE BUTTON -->
             <v-btn color="green white--text" @click="salvar()">
               <span>SAVE</span>
             </v-btn>
 
             <!-- MANLIST SETTINGS -->
-            <v-btn color="blue white--text" 
+            <v-btn color="black white--text" 
             @click="statusList=!statusList, showMan=!showMan">
             <span>MAN LIST</span></v-btn>                
 
             <!-- WOMANLIST SETTINGS -->    
-              <v-btn color="pink white--text" 
+              <v-btn color="white" 
               @click="statusList=!statusList, showWoman=!showWoman">
               <span>WOMAN LIST</span></v-btn>
           </v-flex>
